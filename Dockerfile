@@ -3,8 +3,8 @@ FROM php:8.2-fpm
 
 # ติดตั้ง Extension ที่จำเป็น
 RUN apt-get update && apt-get install -y \
-    libzip-dev unzip \
-    && docker-php-ext-install pdo_mysql zip
+    libzip-dev unzip libpq-dev \
+    && docker-php-ext-install pdo_mysql pdo_pgsql pgsql zip
 
 # ติดตั้ง Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
@@ -30,3 +30,4 @@ EXPOSE 8080
 
 # Start Laravel
 CMD ["php", "-S", "0.0.0.0:8080", "-t", "public"]
+
