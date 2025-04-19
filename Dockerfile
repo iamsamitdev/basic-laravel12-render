@@ -25,7 +25,7 @@ RUN composer install --no-dev --optimize-autoloader
 RUN npm install
 
 # Build Assets โดยกำหนด ENV ให้ถูก
-RUN VITE_ASSET_URL=https://basic-laravel12-render.onrender.com/build/ npm run build
+RUN VITE_ASSET_URL=https://basic-laravel12-render.onrender.com npm run build
 
 # Permission
 RUN chmod -R 775 storage bootstrap/cache
@@ -35,6 +35,8 @@ EXPOSE 8080
 
 # Start Laravel Server
 CMD php artisan config:clear \
+ && php artisan route:clear \
+ && php artisan view:clear \
  && php artisan config:cache \
  && php artisan migrate --force \
  && php artisan serve --host=0.0.0.0 --port=8080
