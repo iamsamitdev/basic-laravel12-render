@@ -21,8 +21,11 @@ COPY . .
 # ติดตั้ง PHP Dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# ติดตั้ง Node Modules และ Build Assets
-RUN npm install && npm run build
+# ติดตั้ง Node Modules
+RUN npm install
+
+# Build Assets โดยส่ง ENV ที่ถูกต้อง
+RUN APP_ENV=production APP_URL=https://basic-laravel12-render.onrender.com npm run build
 
 # ตั้ง Permission สำหรับ Laravel
 RUN chmod -R 775 storage bootstrap/cache
