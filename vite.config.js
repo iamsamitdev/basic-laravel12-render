@@ -17,13 +17,6 @@ export default defineConfig(({ mode }) => {
         build: {
             manifest: true,
             outDir: 'public/build',
-            rollupOptions: {
-                output: {
-                    assetFileNames: `assets/[name].[hash].[ext]`,
-                    chunkFileNames: `assets/[name].[hash].js`,
-                    entryFileNames: `assets/[name].[hash].js`,
-                }
-            }
         },
         server: {
             https: true
