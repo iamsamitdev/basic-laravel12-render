@@ -3,7 +3,7 @@ import laravel from 'laravel-vite-plugin'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig(({ mode }) => {
-    
+
     const env = loadEnv(mode, process.cwd())
 
     return {
@@ -14,6 +14,6 @@ export default defineConfig(({ mode }) => {
             }),
             tailwindcss(),
         ],
-        base: env.VITE_ASSET_URL || '/',
+        base: '/',
     }
 })
