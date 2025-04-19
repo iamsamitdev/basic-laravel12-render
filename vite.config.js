@@ -3,7 +3,6 @@ import laravel from 'laravel-vite-plugin'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig(({ mode }) => {
-
     const env = loadEnv(mode, process.cwd())
 
     return {
@@ -14,6 +13,20 @@ export default defineConfig(({ mode }) => {
             }),
             tailwindcss(),
         ],
-        base: '/',
+        base: env.VITE_ASSET_URL || '/', // ให้ base อิงจาก VITE_ASSET_URL
+        build: {
+            manifest: true,
+            outDir: 'public/build',
+            rollupOptions: {
+                output: {
+                    assetFileNames: `assets/[name].[hash].[ext]`,
+                    chunkFileNames: `assets/[name].[hash].js`,
+                    entryFileNames: `assets/[name].[hash].js`,
+                }
+            }
+        },
+        server: {
+            https: true
+        }
     }
 })
