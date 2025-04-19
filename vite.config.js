@@ -10,13 +10,14 @@ export default defineConfig(({ mode }) => {
         plugins: [
             laravel({
                 input: ['resources/css/app.css', 'resources/js/app.js'],
-                refresh: true,
+                refresh: false,
             }),
             tailwindcss(),
         ],
         base: env.VITE_ASSET_URL || '/',
         build: {
             manifest: true,
+            manifestFileName: 'manifest.json',
             outDir: 'public/build',
             emptyOutDir: true,
             rollupOptions: {

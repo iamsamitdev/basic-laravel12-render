@@ -15,7 +15,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && apt-get install
 # กำหนด Working Directory
 WORKDIR /var/www/html
 
-# ✅ Copy source ก่อน build
+# Copy source ก่อน build
 COPY . .
 
 # PHP Dependencies
@@ -24,10 +24,13 @@ RUN composer install --no-dev --optimize-autoloader
 # Node Modules
 RUN npm install
 
+# กำหนด Environment Variables
+ENV NODE_ENV=production
+
 # Build Assets และสร้าง manifest.json
 RUN npm run build
 
-# ✅ สำคัญ: Confirm ว่ามีไฟล์ manifest จริง
+# สำคัญ: Confirm ว่ามีไฟล์ manifest จริง
 RUN ls -la public/build
 
 # ตั้ง Permission
