@@ -1,0 +1,204 @@
+================================
+💡 Full Stack Laravel 12 with InertiaJS 2 and React  💡
+================================
+⚡ DAY 1
+1.แนวทางการพัฒนาเว็บแอพด้วย Laravel
+2.อัพเดทสิ่งใหม่และพื้นฐานใน Laravel 12
+3.การเตรียมเครื่องมือและการติดตั้ง Laravel 12
+-------------------------------------------------------
+🚀1. การเตรียมเครื่องมือและความพร้อม
+💻 XAMPP & PHP 8.2.x
+---
+php -v
+
+💻 MySQL / MariaDB
+---
+mysql --version
+
+💻 Node JS 20.x and up
+---
+node -v
+npm -v
+ppx -v
+
+💻 Composer
+---
+composer --version
+
+💻 PostgreSQL 15 and up
+---
+psql --version
+
+💻 Git
+---
+git version
+
+💻 VSCode
+---
+code -v
+
+🚀2.Setup Project
+---
+</> Server Prerequisites to Install Laravel 12
+
+PHP >= 8.2
+Ctype PHP Extension
+cURL PHP Extension
+DOM PHP Extension
+Fileinfo PHP Extension
+Filter PHP Extension
+Hash PHP Extension
+Mbstring PHP Extension
+OpenSSL PHP Extension
+PCRE PHP Extension
+PDO PHP Extension
+Session PHP Extension
+Tokenizer PHP Extension
+XML PHP Extension
+
+การติดตั้ง
+---
+</> ติดตั้งเวอร์ชั่นล่าสุด (12.x)
+💻 composer create-project  laravel/laravel sample-laravel12
+
+หมายเหตุ ติดตั้งระบุเลข Version เฉพาะ
+💻 composer create-project laravel/laravel:^12.0 sample-laravel12
+
+</> การรันโปรเจ็กต์
+---
+💻 php artisan serve
+ปกติจะรันอยู่ที่ http://localhost:8000
+
+หากต้องการ run ที่ port อื่น 
+💻php artisan serve  --port=9000
+
+</> Laravel Basic Routing
+---
+
+</> Basic Routing
+---
+
+Route::get('/', function () {
+    return 'Hello World!';
+});
+
+Route::get('about', function(){
+    return 'My about page';
+});
+
+-------------------------------------------------------
+⚡ DAY 2
+-------------------------------------------------------
+สร้างโปรเจ็กต์ laravel 12
+---
+</> ติดตั้งเวอร์ชั่นล่าสุด (12.x)
+💻 composer create-project  laravel/laravel basic-laravel12
+
+ถ้าต้องการกำหนดเลข version
+💻 composer create-project  laravel/laravel:^12.0 basic-laravel12
+
+</> เปิดเข้า vscode
+💻 code basic-laravel12 -r
+
+</> ติดตั้ง nodejs library
+💻 npm i
+
+</> แก้ไข package.json
+---
+"dev": [
+            "Composer\\Config::disableProcessTimeout",
+            "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"npm run dev\" --names=server,queue,logs,vite"
+        ]
+
+</> คำสั่ง run project laravel
+💻 composer dev
+
+</> Routing with Parameters
+---
+Route::get('user/{id}', function ($id) {
+    return 'User:' . $id;
+});
+
+Route::get('posts/{post}/comments/{comment}', function ($postID, $commentID) {
+    return 'Post:' . $postID . '<br>Comment:' . $commentID;
+});
+
+Route::get('member/{name?}', function ($name = null) {
+    return 'Hello' . $name;
+});
+
+</> Regular Expression Constraints
+---
+Route::get('category/{name}', function ($name) {
+    return $name;
+})->where('name', '[A-Za-z]+');
+
+Route::get('group/{id}', function ($id) {
+    return $id;
+})->where('id','[0-9]+');
+
+Route::get('product/{id}/{name}', function ($id, $name) {
+    return 'Product ID:'.$id.'<br>Product name:'.$name;
+})->where(['id' => '[0-9]+', 'name' => '[a-z]+']);
+
+</> Named Routes
+---
+Route::get('guest/showroom/data/{name?}',function($name=null){
+    return'Hello'.$name;
+})->name('guestprofile');
+
+Route post,put,delete
+---
+Route::post('user/profile',function(){
+    return'POST';
+});
+
+Route::put('user/profile',function(){
+    return'PUT';
+});
+
+Route::delete('user/profile',function(){
+    return'DELETE';
+});
+
+</> พื้นฐานการทำงานกับ Controller ใน Laravel 12
+---
+การสร้าง Controller ใหม่
+php artisan make:controller HomeController
+
+</> การเรียกใช้งาน Controller ใน routes (web.php)
+---
+Method 1:
+
+Route::get(
+  'profile’,
+  'App\Http\Controllers\HomeController@showprofile’
+);
+
+Method 2:
+
+use App\Http\Controllers\HomeController;
+
+Route::get(
+  'profile’,
+  [HomeController::class,'showprofile’]
+);
+
+</> Route Prefixes
+---
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('users', function ()    {
+        // Matches The "/admin/users" URL
+    });
+});
+
+Route::group(['prefix' => 'accounts/{account_id}'], function () {
+    Route::get('detail', function ($account_id)    {
+        // Matches The accounts/{account_id}/detail URL
+    });
+});
+
+
+ตัวอย่างการสร้าง View ด้วย php artisan
+---
+php artisan make:view home
