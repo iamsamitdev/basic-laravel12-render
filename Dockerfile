@@ -15,7 +15,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && apt-get install
 # กำหนด Working Directory
 WORKDIR /var/www/html
 
-# Copy Source
+# ✅ Copy source ก่อน build
 COPY . .
 
 # PHP Dependencies
@@ -24,10 +24,13 @@ RUN composer install --no-dev --optimize-autoloader
 # Node Modules
 RUN npm install
 
-# Build Assets โดยกำหนด ENV ให้ถูก
-RUN VITE_ASSET_URL=https://basic-laravel12-render.onrender.com npm run build
+# Build Assets และสร้าง manifest.json
+RUN npm run build
 
-# Permission
+# ✅ สำคัญ: Confirm ว่ามีไฟล์ manifest จริง
+RUN ls -la public/build
+
+# ตั้ง Permission
 RUN chmod -R 775 storage bootstrap/cache
 
 # เปิด Port
