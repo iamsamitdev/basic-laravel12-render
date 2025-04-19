@@ -18,6 +18,7 @@ export default defineConfig(({ mode }) => {
         build: {
             manifest: true,
             outDir: 'public/build',
+            emptyOutDir: true,
             rollupOptions: {
                 input: [
                     'resources/css/app.css',
